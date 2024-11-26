@@ -18,7 +18,8 @@ pub fn generate(content: String) -> String {
     let mut hasher = Sha256::new();
     hasher.update(content.as_bytes());
     let hash = hasher.finalize();
-    hex::encode(hash)
+    let hash_hex = hex::encode(hash);
+    return String::from(&hash_hex[..40]);
 }
 
 #[cfg(test)]
@@ -28,8 +29,9 @@ mod tests {
     #[test]
     fn should_generate_id(){
         let result = generate(String::from("hello world"));
+        println!("{}", result.len());
         assert_eq!(
-            "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9",
+            "b94d27b9934d3e08a52e52d7da7dabfac484efe3",
             result
         )
     }
